@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simulador interativo de Tempo de Tela e Saúde Digital alinhado à BNCC (Habilidade EM13CO24 - Cultura Digital).">
+  <meta name="theme-color" content="#1e3a8a">
+  <title>Simulador de Tempo de Tela e Saúde Digital | BNCC EM13CO24</title>
+
+  <!-- PWA Manifest & Ícones -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./assets/images/icons/icon-192.png">
+
+  <!-- Fontes Modernas (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos Modulares -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
+
+  <!-- Ícones Lucide (CDN leve sem dependências) -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+</head>
+<body>
+  <!-- Link de Pulo para Acessibilidade (WCAG) -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- Barra Superior de Navegação / Dashboard Header -->
+  <header class="topbar" role="banner">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <i data-lucide="smartphone-nfc"></i>
+        </div>
+        <div>
+          <h1 class="brand-title">Saúde Digital <span class="badge-bncc">EM13CO24</span></h1>
+          <p class="brand-subtitle">Simulador de Tempo de Tela e Autorregulação</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <span id="save-indicator" class="save-indicator" aria-live="polite" title="Dados salvos automaticamente no navegador">
+          <i data-lucide="cloud-check"></i>
+          <span>Salvo</span>
+        </span>
+        <button 
+          type="button" 
+          id="theme-toggle" 
+          class="btn-icon" 
+          aria-label="Alternar entre modo claro e escuro"
+          title="Alternar tema">
+          <i data-lucide="moon" id="theme-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container main-wrapper" role="main">
+    <!-- Banner Pedagógico Introdutório -->
+    <section class="hero-banner" aria-labelledby="banner-heading">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i data-lucide="graduation-cap" aria-hidden="true"></i>
+          <span>Cultura Digital • Ensino Médio (BNCC)</span>
+        </div>
+        <h2 id="banner-heading">Você controla as telas ou as telas controlam o seu tempo?</h2>
+        <p>
+          Este simulador desenvolve a habilidade <strong>EM13CO24</strong>, ajudando você a analisar criticamente seus hábitos digitais, compreender o impacto da economia da atenção na saúde física e mental e construir estratégias reais de equilíbrio.
+        </p>
+      </div>
+    </section>
+
+    <!-- Grid Principal do Dashboard (Entradas vs Resultados) -->
+    <div class="dashboard-grid">
+      
+      <!-- COLUNA 1: CONTROLES INTERATIVOS -->
+      <section class="card" aria-labelledby="section-habitos">
+        <div class="card-header">
+          <i data-lucide="sliders-horizontal" class="card-icon" aria-hidden="true"></i>
+          <h2 id="section-habitos">1. Seus Hábitos Diários (Média/dia)</h2>
+        </div>
+
+        <form id="simulator-form" novalidate>
+          <!-- Estudo -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="estudo" class="input-label">
+                <i data-lucide="book-open" aria-hidden="true"></i>
+                <span>Estudos, pesquisas e tarefas</span>
+              </label>
+              <output for="estudo" class="badge-val badge-produtivo" id="val-estudo">2.0 h</output>
+            </div>
+            <input 
+              type="range" 
+              id="estudo" 
+              name="estudo" 
+              min="0" 
+              max="8" 
+              step="0.5" 
+              value="2"
+              aria-describedby="desc-estudo">
+            <p id="desc-estudo" class="helper-text">Atividades escolares, leitura digital, cursos ou produção de conteúdo.</p>
+          </div>
+
+          <!-- Redes Sociais -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="redes" class="input-label">
+                <i data-lucide="message-circle-heart" aria-hidden="true"></i>
+                <span>Redes sociais e mensagens</span>
+              </label>
+              <output for="redes" class="badge-val badge-recreativo" id="val-redes">2.5 h</output>
+            </div>
+            <input 
+              type="range" 
+              id="redes" 
+              name="redes" 
+              min="0" 
+              max="10" 
+              step="0.5" 
+              value="2.5"
+              aria-describedby="desc-redes">
+            <p id="desc-redes" class="helper-text">Instagram, TikTok, WhatsApp, X, YouTube Shorts, etc.</p>
+          </div>
+
+          <!-- Lazer e Jogos -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="lazer" class="input-label">
+                <i data-lucide="gamepad-2" aria-hidden="true"></i>
+                <span>Jogos digitais, séries e vídeos</span>
+              </label>
+              <output for="lazer" class="badge-val badge-recreativo" id="val-lazer">1.5 h</output>
+            </div>
+            <input 
+              type="range" 
+              id="lazer" 
+              name="lazer" 
+              min="0" 
+              max="10" 
+              step="0.5" 
+              value="1.5"
+              aria-describedby="desc-lazer">
+            <p id="desc-lazer" class="helper-text">Entretenimento, streamings e jogos online ou offline.</p>
+          </div>
+
+          <!-- Uso Antes de Dormir -->
+          <div class="input-group">
+            <div class="input-header">
+              <label for="sono" class="input-label">
+                <i data-lucide="moon-star" aria-hidden="true"></i>
+                <span>Uso de telas antes de dormir</span>
+              </label>
+              <output for="sono" class="badge-val badge-sono" id="val-sono">45 min</output>
+            </div>
+            <input 
+              type="range" 
+              id="sono" 
+              name="sono" 
+              min="0" 
+              max="180" 
+              step="15" 
+              value="45"
+              aria-describedby="desc-sono">
+            <p id="desc-sono" class="helper-text">Tempo conectado já deitado ou na última hora antes do sono.</p>
+          </div>
+        </form>
+      </section>
+
+      <!-- COLUNA 2: CÁLCULOS E INDICADORES -->
+      <section class="card" aria-labelledby="section-impacto" aria-live="polite">
+        <div class="card-header">
+          <i data-lucide="bar-chart-3" class="card-icon" aria-hidden="true"></i>
+          <h2 id="section-impacto">2. Impacto Calculado no Tempo</h2>
+        </div>
+
+        <!-- KPIs Principais -->
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-icon" aria-hidden="true"><i data-lucide="clock"></i></span>
+            <span class="number" id="total-dia">6.0h</span>
+            <span class="label">Por Dia</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-icon" aria-hidden="true"><i data-lucide="calendar-days"></i></span>
+            <span class="number" id="total-semana">42.0h</span>
+            <span class="label">Por Semana</span>
+          </div>
+          <div class="stat-box highlight-stat">
+            <span class="stat-icon" aria-hidden="true"><i data-lucide="hourglass"></i></span>
+            <span class="number" id="dias-ano">91</span>
+            <span class="label">Dias inteiros/ano</span>
+          </div>
+        </div>
+
+        <!-- Barra de Proporção Produtivo vs Recreativo -->
+        <div class="progress-bar-container">
+          <div class="progress-label">
+            <span class="legend-produtivo">
+              <span class="dot dot-produtivo" aria-hidden="true"></span>
+              Estudo: <strong id="pct-produtivo">33%</strong>
+            </span>
+            <span class="legend-recreativo">
+              <span class="dot dot-recreativo" aria-hidden="true"></span>
+              Redes + Lazer: <strong id="pct-lazer">67%</strong>
+            </span>
+          </div>
+          <div 
+            class="progress-track" 
+            role="progressbar" 
+            aria-label="Proporção entre uso produtivo e recreativo"
+            aria-valuemin="0" 
+            aria-valuemax="100" 
+            aria-valuenow="33"
+            id="progress-track-aria">
+            <div class="bar-produtivo" id="bar-produtivo" style="width: 33%;"></div>
+            <div class="bar-lazer" id="bar-lazer" style="width: 67%;"></div>
+          </div>
+        </div>
+
+        <!-- Diagnóstico Pedagógico Dinâmico -->
+        <div id="feedback-box" class="feedback-box" role="status">
+          <div class="feedback-header">
+            <i data-lucide="check-circle-2" id="feedback-icon" aria-hidden="true"></i>
+            <strong id="feedback-titulo">Análise de Equilíbrio:</strong>
+          </div>
+          <p id="feedback-texto">Carregando análise...</p>
+        </div>
+
+        <!-- Alerta de Higiene do Sono -->
+        <div id="sleep-alert" class="sleep-alert" role="alert" hidden>
+          <div class="sleep-alert-header">
+            <i data-lucide="alert-triangle" aria-hidden="true"></i>
+            <strong>Atenção à Higiene do Sono:</strong>
+          </div>
+          <p>
+            O uso de telas antes de dormir inibe a produção de <strong>melatonina</strong> (hormônio do sono) pela luz azul e mantém o cérebro em estado de alerta, prejudicando a consolidação da memória, o foco e o humor no dia seguinte.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEÇÃO 3: QUESTÕES REFLEXIVAS E FICHA DIAGNÓSTICA -->
+    <section class="card reflection-section" aria-labelledby="section-reflexao">
+      <div class="card-header">
+        <i data-lucide="brain-circuit" class="card-icon" aria-hidden="true"></i>
+        <h2 id="section-reflexao">3. Questões Reflexivas (Problematização Crítica)</h2>
+      </div>
+      
+      <p class="section-intro">
+        Com base nos números simulados acima, registre suas reflexões para compor sua <strong>Ficha Diagnóstica Individual</strong>:
+      </p>
+
+      <div class="student-meta">
+        <div class="question-item">
+          <label for="student-name">Nome do(a) Estudante (opcional para o relatório):</label>
+          <input type="text" id="student-name" class="text-input" placeholder="Ex: Ana Silva — 2ª Série EM">
+        </div>
+      </div>
+
+      <div class="questions-grid">
+        <div class="question-item">
+          <label for="q1">
+            <strong>a)</strong> Olhando para a projeção de <em>"dias inteiros por ano"</em> nas telas, o que mais te surpreendeu? Que atividades fora das telas (sono, esportes, encontros presenciais) podem estar perdendo espaço?
+          </label>
+          <textarea id="q1" rows="3" placeholder="Escreva sua reflexão aqui..."></textarea>
+        </div>
+
+        <div class="question-item">
+          <label for="q2">
+            <strong>b)</strong> Como o tempo dedicado às redes sociais influencia sua autoestima, seu foco nos estudos ou a comparação social com outras pessoas?
+          </label>
+          <textarea id="q2" rows="3" placeholder="Escreva sua reflexão aqui..."></textarea>
+        </div>
+
+        <div class="question-item">
+          <label for="q3">
+            <strong>c)</strong> O excesso de tempo conectado depende apenas da força de vontade do usuário ou as plataformas são projetadas (rolagem infinita, notificações, algoritmos) para prender nossa atenção?
+          </label>
+          <textarea id="q3" rows="3" placeholder="Escreva sua reflexão aqui..."></textarea>
+        </div>
+
+        <div class="question-item">
+          <label for="q4">
+            <strong>d)</strong> Cite <strong>1 atitude prática</strong> que você pode adotar nesta semana para tornar sua relação com as tecnologias mais saudável:
+          </label>
+          <textarea id="q4" rows="3" placeholder="Ex: Desativar notificações durante os estudos, deixar o celular longe da cama..."></textarea>
+        </div>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="actions">
+        <button type="button" id="btn-gerar" class="btn btn-primary">
+          <i data-lucide="file-check-2" aria-hidden="true"></i>
+          <span>Gerar Ficha Diagnóstica</span>
+        </button>
+
+        <button type="button" id="btn-copiar" class="btn btn-secondary" disabled>
+          <i data-lucide="copy" aria-hidden="true"></i>
+          <span>Copiar Relatório</span>
+        </button>
+
+        <button type="button" id="btn-pdf" class="btn btn-accent" disabled>
+          <i data-lucide="file-down" aria-hidden="true"></i>
+          <span>Exportar PDF</span>
+        </button>
+
+        <button type="button" id="btn-reiniciar" class="btn btn-danger-outline">
+          <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+          <span>Reiniciar Simulação</span>
+        </button>
+      </div>
+
+      <!-- Toast de Feedback de Ações -->
+      <div id="toast-notification" class="toast" role="status" aria-live="polite"></div>
+
+      <!-- Área da Ficha Diagnóstica Gerada -->
+      <article id="resumo-container" class="report-card" hidden aria-label="Ficha Diagnóstica Gerada">
+        <div class="report-header">
+          <div>
+            <h3>📋 FICHA DIAGNÓSTICA — CULTURA DIGITAL (EM13CO24)</h3>
+            <p id="report-timestamp" class="report-meta"></p>
+          </div>
+          <span class="report-badge" id="report-badge-status">Diagnóstico</span>
+        </div>
+        <pre id="resumo-gerado" class="report-content"></pre>
+      </article>
+    </section>
+  </main>
+
+  <!-- Rodapé Institucional -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>
+        <strong>Simulador de Tempo de Tela e Saúde Digital</strong> • Objeto Educacional Aberto (OEA) alinhado à BNCC (<strong>EM13CO24</strong>).
+      </p>
+      <p class="footer-sub">
+        Desenvolvido com foco em Educação Digital, Acessibilidade (WCAG) e Software Livre • Licença MIT.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Entry Point ES6 Module -->
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>
